@@ -6,9 +6,7 @@ import (
 )
 
 func TestAdd(t *testing.T) {
-    db := Database{
-        TodoList: make(map[int]TodoModel),
-    }
+    db := CreateNewDB()
 
     tm := TodoModel{Title: "Going for a run", Description:"With George."}
     db.Add(tm);
@@ -33,9 +31,7 @@ func TestAdd(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
-    db := Database{
-        TodoList: make(map[int]TodoModel),
-    }
+    db := CreateNewDB()
     
     tm := TodoModel{Title: "Going for a run", Description:"With George."}
     db.Add(tm);

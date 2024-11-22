@@ -32,3 +32,10 @@ func (db *Database) GetAll() []TodoModel {
 
     return list
 }
+
+func CreateNewDB() *Database {
+    db := Database {
+        TodoList: make(map[int]TodoModel),
+    }
+    return &db
+}
