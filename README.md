@@ -1,10 +1,28 @@
-Create the foundation of a to-do list application, focusing on backend functionality and essential frontend interaction. Your task is implementing a RESTful API using Go and a simple JS interface using React. The goal is to be able to be able to list and add todo's.
+﻿# To-do list application 
+# Design Decisions
+For the backend, I separated it into three packages, `api`, `service` and `database`. This made it easy to test and ensured that implementing futures changes to any part did not affect the rest. 
 
-The backend needs to meet the openapi spec which within the backend folder. You need to create the list endpoint and the add todo endpoint. The storage system is in-memory.
+For the frontend, I separated the `<form>` tag into its own react component.
 
-The frontend already has functionality to list the todo's, your task is to complete the form which submits todo's to the backend system.
+## Assumptions
+The following where assumed to be true when completing this project:
 
-Please use this repo as your base and commit your code so it can reviewed by us. Please get as far as you can within 2 hours.
+- When creating a new to-do, `title` had to be a non-empty string.
+- When an invalid request was received, the response was an string representation of the error.
+
+## Model Representation
+- To-do
+	There are two structs that represent a single to-do, one struct `TodoRR` defined in the `api` package and `TodoModel` defined in the `database` package. Although not implemented, having a separate database representation allows you stores information that may not be necessary in the creation of a to-do and in the `GET` response (e.g: time of creation).
+
+## Database
+The struct `Database` defines our database, and has the following fields:
+- `TodoList` - mapping from `int` to `TodoModel`
+- `mu` - a `sync.RWMutex` ensuring that concurrent reading/writing to the database is safe
+- `count` - stores number of to-do's.
+
+Having an integer as a key for `TodoList` enables you to store  two different to-do's with the same title. Using a `sync.RWMutex` ensures that concurrent reads to the database do not block each other which can help the scalability of this solution. `count` stores the length of the list and by using the current length as a key we ensure that all to-dos will have a unique key.
+
+In a future implementation, I would like to add caching to this database something which is not practical when the current database is just a map.
 
 # Setup
 If not already installed, please install the following:
