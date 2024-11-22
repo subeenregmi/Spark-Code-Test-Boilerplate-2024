@@ -5,7 +5,7 @@ import "sync"
 type Database struct {
     TodoList  map[int]TodoModel
     mu        sync.RWMutex // Mutex ensures thread safety
-    count     int
+    Count     int
 }
 
 type TodoModel struct {
@@ -17,15 +17,15 @@ func (db *Database) Add(t TodoModel) {
     db.mu.Lock()
     defer db.mu.Unlock()
 
-    db.count++
-    db.TodoList[db.count] = t
+    db.Count++
+    db.TodoList[db.Count] = t
 }
 
 func (db *Database) GetAll() []TodoModel {
     db.mu.RLock() // Reads do not block other reads.
     defer db.mu.RUnlock()
 
-    list := make([]TodoModel, 0, db.count)
+    list := make([]TodoModel, 0, db.Count)
     for _, v := range db.TodoList {
         list = append(list, v)
     }

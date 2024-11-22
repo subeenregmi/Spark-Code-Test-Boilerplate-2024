@@ -90,7 +90,7 @@ func TestGetAll(t *testing.T) {
     sample = append(sample, tm)
     db.Add(tm);
 
-    if db.count != 13 {
-        t.Fatalf(`Adding to database has a counting error. Expected %d. Got %d.`, db.count, 13)
+    if db.Count != 13 {
+        t.Fatalf(`Adding to database has a counting error. Expected %d. Got %d.`, db.Count, 13)
     }
 }
