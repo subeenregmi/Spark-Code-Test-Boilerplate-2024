@@ -1,13 +1,16 @@
 package main
 
-import "net/http"
+import (
+	"my-project/api"
+	"my-project/database"
+	"net/http"
+)
 
 func main() {
-	// Your code here
+    db := database.CreateNewDB()
+    todoapp := api.TodoHandler{DB: db}
+
+    http.Handle("/", &todoapp)
+    http.ListenAndServe(":8080", nil)
 }
 
-func ToDoListHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-
-	// Your code here
-}
